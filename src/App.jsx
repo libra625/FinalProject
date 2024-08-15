@@ -1,0 +1,16 @@
+import './index.css';
+import RouterDisplayPage from "./router/pages/RouterDisplayPage/index.js";
+import React from "react";
+
+function App() {
+
+    return (
+
+        <React.Fragment>
+            <RouterDisplayPage/>
+        </React.Fragment>
+
+    )
+}
+
+export default App
