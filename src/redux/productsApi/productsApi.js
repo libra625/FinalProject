@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-const API_BASE_URL = 'https://fakestoreapi.com/'
+const API_BASE_URL = 'http://localhost:3000/'
 
 export const productsApi = createApi({
     reducerPath: 'productsApi',
@@ -13,7 +13,7 @@ export const productsApi = createApi({
             query: (productId = 1) => `products/${productId}`,
         }),
         getAllCategories: builder.query({
-            query: () => `products/categories`,
+            query: () => `categories`,
         }),
         getAllProductsByCategory: builder.query({
             query: ({category, limit}) => `/products/category/${category}?limit=${limit}`

@@ -55,11 +55,10 @@ const HeaderBottom = () => {
                 </div>
                 <div style={styles.wrapperButtonGroup}>
 
-                        <Button sx={styles.buttonLogIn} variant="contained">
+                    <Button sx={styles.buttonLogIn} variant="contained">
                         <LoginOutlinedIcon/>
                         <Typography variant='h6'>LogIn</Typography>
-                        </Button>
-
+                    </Button>
 
                     <div className="w-[1px] h-9" style={styles.separator}/>
 

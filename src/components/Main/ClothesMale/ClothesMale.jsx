@@ -11,12 +11,13 @@ const ClothesMale = () => {
     return (
         <section style={styles.section}>
             <Container>
-                <Link to={'/men\'s clothing'}>
+                <Link to={'/categories/men\'s%20clothing'}>
                     <Typography
                         variant={'h4'}
                         component={'h4'}
                         sx={styles.title}>
-                        For him <ArrowForwardIcon color={'error'} fontSize={'30px'}/></Typography>
+                        For him <ArrowForwardIcon color={'error'} fontSize={'30px'}/>
+                    </Typography>
                 </Link>
 
                 <div style={{display: 'flex'}}>

@@ -2,17 +2,22 @@ import {Container, Typography} from "@mui/material";
 import ProductInList from "../../UI/cards/ProductInList";
 import {useGetAllProductsByCategoryQuery} from "../../../redux/productsApi/productsApi.js";
 import {styles} from "./style.js";
+import {Link} from "react-router-dom";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Electronics = () => {
     const electronics = useGetAllProductsByCategoryQuery({category: 'electronics', limit: 4});
     return (
         <section style={styles.section}>
             <Container>
-                <Typography
-                    variant={'h4'}
-                    component={'h4'}
-                    sx={styles.title}>
-                    Electronics</Typography>
+                <Link to={'/categories/electronics'}>
+                    <Typography
+                        variant={'h4'}
+                        component={'h4'}
+                        sx={styles.title}>
+                        Electronics <ArrowForwardIcon color={'error'} fontSize={'30px'}/>
+                    </Typography>
+                </Link>
 
                 <div style={{display: 'flex'}}>
                     {electronics.data && electronics.data.map((product, index) => {
