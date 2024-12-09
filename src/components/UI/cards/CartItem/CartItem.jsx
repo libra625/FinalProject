@@ -16,18 +16,19 @@ import {useSnackbar} from "notistack";
 import ModalDeleteProduct from "../../../ModalsProduct/ModalDeleteProduct/index.js";
 import CheckIcon from '@mui/icons-material/Check';
 import {Link} from "react-router-dom";
+import Cookies from "js-cookie";
 
 const CartItem = ({
-                      title,
-                      description,
-                      image,
-                      price,
-                      rating,
-                      count,
-                      id,
-                      onQuantityChange,
-                      amount,
-                  }) => {
+    title,
+    description,
+    image,
+    price,
+    rating,
+    count,
+    id,
+    onQuantityChange,
+    amount,
+}) => {
     const {enqueueSnackbar} = useSnackbar();
     const dispatch = useDispatch();
     const {favouriteList} = useSelector((state) => state.localStorage);
@@ -55,6 +56,11 @@ const CartItem = ({
     };
 
     const handleFavClick = () => {
+        if (Cookies.get('LoggedIn') !== 'true') {
+            enqueueSnackbar('You need to log in to view your favorites!', {variant: 'error'});
+            return;
+        }
+
         if (!isInFav) {
             enqueueSnackbar("Item Added to Favourites!", {variant: "success"});
             const updatedFavouriteList = [
