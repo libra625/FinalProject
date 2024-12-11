@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import {Link, useNavigate} from "react-router-dom";
+import ModalLogin from "../../ModalsAuth/ModalLogin/index.js";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import routerNames from "../../../router/routes/routerNames.js";
@@ -14,6 +15,8 @@ import ModalDeleteAllProducts from "../../ModalsProduct/ModalDeleteAllProducts/i
 
 const CartList = () => {
     const {enqueueSnackbar} = useSnackbar();
+    const {displayAuthButtons} = useSelector(state => state.modalsAuth);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -29,6 +32,10 @@ const CartList = () => {
     useEffect(() => {
         dispatch(getProductList())
     }, [dispatch])
+
+    useEffect(() => {
+        setIsLoggedIn(!!displayAuthButtons);
+    }, [displayAuthButtons]);
 
     const getTotalPrice = (products) => {
         const priceTotal = products.reduce((totalPrice, product) => {
@@ -60,7 +67,6 @@ const CartList = () => {
             dispatch(setProductList(updatedList))
         }
     }
-
 
     const handleDeleteAll = () => {
         dispatch(removeAllProducts())
@@ -134,8 +140,8 @@ const CartList = () => {
                     <Box sx={styles.placeOrder}>
                         <List>
 
-                            {(<ListItem sx={styles.sideBar}>
-
+                            {!isLoggedIn && (<ListItem sx={styles.sideBar}>
+                                <ModalLogin button={
                                     <Button
                                         sx={styles.loginButton}
                                         variant='outlined'
@@ -143,7 +149,7 @@ const CartList = () => {
                                     >
                                         Log in
                                     </Button>
-
+                                }/>
                             </ListItem>)}
                             <ListItem className={'flex flex-col'} sx={styles.sideBar}>
                                 <Link to={routerNames.pageCheckout}>
@@ -160,7 +166,7 @@ const CartList = () => {
                                             <>
                                                 <Typography>
                                                     {`${getTotalPrice(orderList).quantity}
-                                                    ${getTotalPrice(orderList).quantity < 2 ? getTotalPrice(orderList).quantity === 1 ? 'item' : 'items' : 'items'} for `}
+                                                    ${getTotalPrice(orderList).quantity < 2 ? getTotalPrice(orderList).quantity === 1 ? 'item' : 'items' : 'items'} `}
                                                 </Typography>
                                                 <Typography sx={styles.totalPriceSub}>
                                                     $ {getTotalPrice(orderList).price}

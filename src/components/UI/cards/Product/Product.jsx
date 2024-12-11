@@ -19,25 +19,24 @@ import {Link} from "react-router-dom";
 import routerNames from "../../../../router/routes/routerNames.js";
 import CartSide from "../../../Main/CartSide/index.js";
 import {useSnackbar} from "notistack";
-import KrashComfy from "../../../../assets/icons/KrashComfy.jsx";
-import CreditComfy from "../../../../assets/icons/CreditComfy.jsx";
-import PetComfy from "../../../../assets/icons/PetComfy.jsx";
-import AppleComfy from "../../../../assets/icons/AppleComfy.jsx";
+import Krash from "../../../../assets/icons/Krash.jsx";
+import Credit from "../../../../assets/icons/Credit.jsx";
+import Pet from "../../../../assets/icons/Pet.jsx";
+import Apple from "../../../../assets/icons/Apple.jsx";
 
 const Product = ({
-                     id,
-                     title,
-                     description,
-                     image,
-                     price,
-                     rating,
-                     count,
-                 }) => {
+    id,
+    title,
+    description,
+    image,
+    price,
+    rating,
+    count,
+}) => {
     const {enqueueSnackbar} = useSnackbar();
     const dispatch = useDispatch();
     const {orderList} = useSelector((state) => state.localStorage);
     const {favouriteList} = useSelector((state) => state.localStorage);
-
 
     const [isInCart, setIsInCart] = useState(orderList.some(product => product.id === id));
 
@@ -55,7 +54,6 @@ const Product = ({
         setIsInCart(orderList.some(product => product.id === id));
         setIsInFav(favouriteList.some((product) => product.id === id))
     }, [orderList, id, favouriteList]);
-
 
     useEffect(() => {
         dispatch(getFavProductList());
@@ -86,7 +84,6 @@ const Product = ({
     const productIndex = useMemo(() => {
         return orderList.findIndex(product => product.id === id);
     }, [orderList, id]);
-
 
     const handleQuantityCount = (id, newAmount) => {
         if (productIndex !== -1) {
@@ -139,26 +136,26 @@ const Product = ({
                     <div className={'flex flex-row items-center gap-3'}>
                         <List className={'flex justify-between gap-3'}>
                             <ListItem sx={styles.underTitleIconsContainer}>
-                                <KrashComfy/>
+                                <Krash/>
                                 <Typography variant='span' sx={styles.underTitleIconsText}>
                                     Crash
                                 </Typography>
                             </ListItem>
                             <ListItem sx={styles.underTitleIconsContainer}>
-                                <CreditComfy/>
+                                <Credit/>
                                 <Typography variant='span' sx={styles.underTitleIconsText}>
                                     PRIVAT-Bank
                                 </Typography>
                             </ListItem>
                             <ListItem sx={styles.underTitleIconsContainer}>
-                                <PetComfy/>
+                                <Pet/>
                                 <Typography variant='span' sx={styles.underTitleIconsText}>
                                     MONO-Bank
                                 </Typography>
 
                             </ListItem>
                             <ListItem sx={styles.underTitleIconsContainer}>
-                                <AppleComfy/>
+                                <Apple/>
                                 <Typography variant='span' sx={styles.underTitleIconsText}>
                                     ALFA-Bank
                                 </Typography>
@@ -189,7 +186,6 @@ const Product = ({
                             >
                                 Buy
                             </Button>
-
 
                         ) : (
                             <CartSide

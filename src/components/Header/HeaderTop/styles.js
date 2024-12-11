@@ -3,6 +3,10 @@ export const styles = {
         backgroundColor: '#fff',
         height: '75px',
     },
+    logo: {
+        backgroundColor: '#fff',
+        height: '30px',
+    },
     container: {
         display: 'flex',
         width: '1400px',
