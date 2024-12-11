@@ -1,7 +1,6 @@
 import {styles} from "./styles.js";
 import {Button, Container, List, ListItem, MenuItem, Typography} from "@mui/material";
 import CitiesSelect from "../../UI/inputs/CitiesSelect";
-import Logo from "../../../assets/icons/Logo";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
@@ -20,6 +19,7 @@ import WifiCalling3OutlinedIcon from '@mui/icons-material/WifiCalling3Outlined';
 import SendIcon from '@mui/icons-material/Send';
 import ModalRegister from "../../ModalsAuth/ModalRegister/index.js";
 import LogoutIcon from '@mui/icons-material/Logout';
+import logo_main from '../../../assets/img/logo_main.png';
 
 const HeaderTop = () => {
     const {displayAuthButtons} = useSelector(state => state.modalsAuth);
@@ -44,6 +44,7 @@ const HeaderTop = () => {
 
     const handleLogOut = () => {
         Cookies.remove('LoggedIn');
+        Cookies.remove('role');
         setIsLoggedIn(false);
         window.location.reload();
         window.location.href = '/';
@@ -54,7 +55,7 @@ const HeaderTop = () => {
             <Container sx={styles.container}>
                 <div style={styles.wrapper}>
                     <Link to={routerNames.pageMain}>
-                        <Logo/>
+                        <img style={styles.logo} src={logo_main} alt={'logo_main'} className='banner-image'/>
                     </Link>
                     <CitiesSelect
                         styles={styles.selector}

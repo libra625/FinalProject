@@ -21,11 +21,22 @@ export const productsApi = createApi({
         getCategoryById: builder.query({
             query: (categoryId = 1) => `categories/${categoryId}`,
         }),
+        getUserByEmailAndPassword: builder.mutation({
+            query: ({email, password}) => ({
+                url: 'users/login',
+                method: 'POST',
+                body: {email, password},
+            }),
+        }),
+        postUser: builder.mutation({
+            query: (newUser) => ({
+                url: 'users/register',
+                method: 'POST',
+                body: newUser,
+            }),
+        }),
         getAllUsers: builder.query({
             query: () => `users`,
-        }),
-        getUserById: builder.query({
-            query: (userId = 1) => `users/${userId}`,
         }),
     })
 })
@@ -40,10 +51,7 @@ export const {
     useLazyGetAllCategoriesQuery,
     useGetCategoryByIdQuery,
     useLazyGetCategoryByIdQuery,
-    useGetAllUsersQuery,
-    useLazyGetAllUsersQuery,
-    useGetUserByIdQuery,
-    useLazyGetUserByIdQuery,
-    useCreateUserMutation,
-    useIsRegisteredEmailMutation
+    useGetUserByEmailAndPasswordMutation,
+    usePostUserMutation,
+    useGetAllUsersQuery
 } = productsApi;

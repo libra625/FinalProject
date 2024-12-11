@@ -4,12 +4,15 @@ import {Button, FormGroup} from '@mui/material';
 import FormInput from '../../UI/inputs/FormInput';
 import {useFormik} from 'formik';
 import loginFormValidation from './loginFormValidation.js';
-import Cookies from 'js-cookie';
 import {styles} from './styles.js';
 import {useDispatch, useSelector} from 'react-redux';
 import {setModalLoginOpen} from '../../../redux/slices/modalsAuthSlice.js';
 import {useSnackbar} from 'notistack';
 import ModalTemplate from '../../UI/ModalTemplate/index.js';
+import {useGetUserByEmailAndPasswordMutation} from "../../../redux/productsApi/productsApi.js";
+import Cookies from "js-cookie";
+import routerNames from "../../../router/routes/routerNames.js";
+import {useNavigate} from "react-router-dom";
 
 const formInitValues = {
     login: '',
@@ -20,6 +23,9 @@ const ModalLogin = ({button}) => {
     const {enqueueSnackbar} = useSnackbar();
     const {modalLoginOpen} = useSelector((state) => state.modalsAuth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [loginUser, {isLoading, isError, error, data}] = useGetUserByEmailAndPasswordMutation();
 
     const handleOpen = () => dispatch(setModalLoginOpen(true)); // Ensure you set the correct state
     const handleClose = () => dispatch(setModalLoginOpen(false)); // Ensure you set the correct state
@@ -31,14 +37,28 @@ const ModalLogin = ({button}) => {
     const formik = useFormik({
         initialValues: {...formInitValues},
         validationSchema: loginFormValidation,
-        onSubmit: (values, {resetForm}) => {
-            enqueueSnackbar('Successful Login!', {variant: 'success'});
-            Cookies.set('LoggedIn', 'true');
-            setTimeout(() => {
+        onSubmit: async (values, {resetForm}) => {
+            try {
+                enqueueSnackbar('Data sent to server to check', {variant: 'warning'});
+                console.log(values)
+                const response = await loginUser({email: values.login, password: values.password}).unwrap();
+                console.log('Login Successful:', response);
+                enqueueSnackbar('Successful Login!', {variant: 'success'});
+                Cookies.set('LoggedIn', 'true');
+                console.log(response.role)
+                Cookies.set('role', response.role);
+                Cookies.set('name', response.first_name);
                 resetForm();
                 handleClose();
+                if (response.role === 'admin') {
+                    navigate(routerNames.pageAdmin);
+                }
                 window.location.reload();
-            }, 1000);
+            } catch (err) {
+                console.error('Login Failed:', err);
+                enqueueSnackbar('Login Failed! Please check your credentials.', {variant: 'error'});
+            }
+
         },
     });
 

@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
 import {getProductList} from "../../../redux/slices/localStorageSlice.js";
 import {useSnackbar} from "notistack";
+import BuildIcon from '@mui/icons-material/Build';
 
 const HeaderBottom = () => {
     const {orderList} = useSelector(state => state.localStorage);
@@ -61,6 +62,8 @@ const HeaderBottom = () => {
 
     const handleLogOut = () => {
         Cookies.remove('LoggedIn');
+        Cookies.remove('role');
+        Cookies.remove('name');
         window.location.reload();
         window.location.reload();
         window.location.href = '/';
@@ -85,7 +88,7 @@ const HeaderBottom = () => {
                 <div style={styles.wrapperButtonGroup}>
                     {displayAuthButtons ? (
                         <HeaderDropdown
-                            title={'Profile'}
+                            title={Cookies.get('name')}
                             icon={<AccountCircleIcon fontSize='large'/>}
                             iconStart={true}
                         >
@@ -100,6 +103,13 @@ const HeaderBottom = () => {
                                     <FavoriteIcon fontSize='small' color='error'/> Favourite
                                 </Link>
                             </MenuItem>
+                            {Cookies.get('role') === 'admin' && (
+                                <MenuItem sx={styles.menuItem}>
+                                    <Link to={routerNames.pageAdmin}>
+                                        <BuildIcon fontSize="small" color="primary"/> Admin Panel
+                                    </Link>
+                                </MenuItem>
+                            )}
                             <MenuItem sx={styles.menuItem} onClick={handleLogOut}>
                                 <LogoutIcon fontSize='small' onClick={handleLogOut} color='error'/> Logout
                             </MenuItem>

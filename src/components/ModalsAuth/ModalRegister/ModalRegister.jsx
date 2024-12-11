@@ -2,7 +2,6 @@ import ModalTemplate from "../../UI/ModalTemplate";
 import PropTypes from "prop-types";
 import {useFormik} from "formik";
 import registerFormValidation from "./registerFormValidation.js";
-import Cookies from "js-cookie";
 import {Button, FormGroup} from "@mui/material";
 import FormInput from "../../UI/inputs/FormInput/index.js";
 import {styles} from "./styles.js";
@@ -11,6 +10,8 @@ import {cloneElement} from "react";
 import {setModalRegOpen} from "../../../redux/slices/modalsAuthSlice.js";
 import {formatPhoneNumber} from "../../../utils/functions/functions.js";
 import {useSnackbar} from "notistack";
+import {usePostUserMutation} from "../../../redux/productsApi/productsApi.js";
+import Cookies from "js-cookie";
 
 const formInitValues = {
     firstName: '',
@@ -39,17 +40,33 @@ const ModalRegister = ({button}) => {
         onClick: handleOpen,
     });
 
+    const [postUser, {isLoading, isError, error, isSuccess}] = usePostUserMutation();
+
     const formik = useFormik({
         initialValues: {...formInitValues},
         validationSchema: registerFormValidation,
-        onSubmit: (values, {resetForm}) => {
-            handleClickVariant('success')();
-            Cookies.set('LoggedIn', 'true');
-            setTimeout(() => {
+        onSubmit: async (values, {resetForm}) => {
+            try {
+                enqueueSnackbar('Data sent to server to check', {variant: 'warning'});
+                const response = await postUser(values).unwrap();
+                console.log('Registration Successful:', response);
+                enqueueSnackbar('Registration Successful!', {variant: 'success'});
+                enqueueSnackbar('Checks passed successfully', {variant: 'success'});
+                Cookies.set('LoggedIn', 'true');
+                Cookies.set('role', 'user');
+                Cookies.set('name', values.firstName);
+                handleClickVariant('success')();
                 resetForm();
                 handleClose();
+                console.log(response);
+                console.log(isLoading);
+                console.log(isError);
+                console.log(isSuccess)
                 window.location.reload();
-            }, 1000);
+            } catch (err) {
+                console.error('Registration Failed:', err);
+                enqueueSnackbar('Registration failed! Please check your details.', {variant: 'error'});
+            }
         },
     });
 

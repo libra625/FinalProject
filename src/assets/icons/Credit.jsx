@@ -1,4 +1,4 @@
-const CreditComfy = () => {
+const Credit = () => {
     return (
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_5193_4843)">
@@ -17,10 +17,10 @@ const CreditComfy = () => {
             </g>
             <defs>
                 <filter id="filter0_d_5193_4843" x="14" y="13" width="17" height="17" filterUnits="userSpaceOnUse"
-                        colorInterpolationFilters="sRGB">
+                    colorInterpolationFilters="sRGB">
                     <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                                   result="hardAlpha"/>
+                        result="hardAlpha"/>
                     <feOffset/>
                     <feGaussianBlur stdDeviation="1"/>
                     <feComposite in2="hardAlpha" operator="out"/>
@@ -35,4 +35,4 @@ const CreditComfy = () => {
         </svg>
     )
 }
-export default CreditComfy;
+export default Credit;

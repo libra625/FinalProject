@@ -8,10 +8,10 @@ import PageFavProducts from "../pages/PageFavProducts";
 import PageOrderInfo from "../pages/PageOrderInfo";
 
 import routerNames from "./routerNames";
-
+import PageAdmin from "../pages/PageAdmin/index.js";
 
 const routerConfig = () => {
-    const pageComponents = [PageMain, PageNotFound, PageCart, PageProduct, PageCheckout, PageCategories, PageFavProducts, PageOrderInfo];
+    const pageComponents = [PageMain, PageNotFound, PageCart, PageProduct, PageCheckout, PageCategories, PageFavProducts, PageOrderInfo, PageAdmin];
     const routeKeys = Object.keys(routerNames);
 
     return pageComponents.map((pageComponent, index) => {

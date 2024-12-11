@@ -18,10 +18,10 @@ import {
 import CartSide from "../../../Main/CartSide/index.js";
 import routerNames from "../../../../router/routes/routerNames.js";
 import {useSnackbar} from "notistack";
-import KrashComfy from "../../../../assets/icons/KrashComfy.jsx";
-import CreditComfy from "../../../../assets/icons/CreditComfy.jsx";
-import PetComfy from "../../../../assets/icons/PetComfy.jsx";
-import AppleComfy from "../../../../assets/icons/AppleComfy.jsx";
+import Krash from "../../../../assets/icons/Krash.jsx";
+import Credit from "../../../../assets/icons/Credit.jsx";
+import Pet from "../../../../assets/icons/Pet.jsx";
+import Apple from "../../../../assets/icons/Apple.jsx";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import CustomTooltip from "../../PopOvers/CustomTooltip/index.js";
@@ -30,7 +30,6 @@ const ProductInList = ({title, image, price, rate, count, itemId, description}) 
     const {enqueueSnackbar} = useSnackbar();
     const {orderList, productQuantity, favouriteList} = useSelector(state => state.localStorage);
     const dispatch = useDispatch();
-
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -51,7 +50,6 @@ const ProductInList = ({title, image, price, rate, count, itemId, description}) 
     const productIndex = useMemo(() => {
         return orderList.findIndex(product => product.id === itemId);
     }, [orderList, itemId]);
-
 
     const handleQuantityCount = (id, newAmount) => {
         if (productIndex !== -1) {
@@ -89,7 +87,6 @@ const ProductInList = ({title, image, price, rate, count, itemId, description}) 
         setIsInCart(orderList.some(product => product.id === itemId));
         setIsInFav(favouriteList.some((product) => product.id === itemId))
     }, [orderList, itemId, favouriteList]);
-
 
     useEffect(() => {
         dispatch(getFavProductList());
@@ -151,10 +148,10 @@ const ProductInList = ({title, image, price, rate, count, itemId, description}) 
                         </div>
 
                         <div className={'flex flex-row items-center gap-3'}>
-                            <KrashComfy/>
-                            <CreditComfy/>
-                            <PetComfy/>
-                            <AppleComfy/>
+                            <Krash/>
+                            <Credit/>
+                            <Pet/>
+                            <Apple/>
                         </div>
                     </div>
 
